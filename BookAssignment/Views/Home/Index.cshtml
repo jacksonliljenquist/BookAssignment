@@ -2,23 +2,52 @@
     ViewData["Title"] = "Home Page";
 }
 
-@model IQueryable<Project>
+@model ProjectListViewModel
 
 <div class="text-center">
     <h1 class="display-4">Book Project</h1>
 </div>
 <style>
     table, th, td {
-        border: 1px solid black;
+
         padding: 15px;
         align-content: center;
     }
+    /*BOOTSTRAP #1 Adding in alternating colors to differentiate rows */
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    /*BOOTSTRAP #2 Added in CSS to change how the button looks, and added in attribute where button will change when hovered over*/
+    #submit {
+        background-color: #bbb;
+        padding: .5em;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-radius: 6px;
+        color: #fff;
+        font-family: 'Oswald';
+        font-size: 20px;
+        text-decoration: none;
+        border: none;
+    }
+
+    #submit:hover {
+        border: none;
+        background: Blue;
+        box-shadow: 0px 0px 1px #777;
+    }
 </style>
+<!--Add in picture of Books-->
 <div class="text-center">
     <img src="~/img/bookImage.jpg" class="rounded"/>
 </div>
+
+<!--Print out database info into table-->
 <div class="align-items-center">
-    <table class="text-center">
+
+    <!-- BOOTSTRAP #3 Changed the table to fill the entire window-->
+    <table style="width: 100%; height: 100%;">
         <tr>
             <th>Title</th>
             <th>Author</th>
@@ -26,8 +55,10 @@
             <th>ISBN</th>
             <th>Classification</th>
             <th>Price</th>
+            <th>Num Pages</th>
+            <th>Purchase Link</th>
         </tr>
-        @foreach (var x in Model)
+        @foreach (var x in Model.Projects)
         {
             <tr>
                 <td>@x.Title</td>
@@ -36,9 +67,17 @@
                 <td>@x.ISBN</td>
                 <td>@x.Classification</td>
                 <td>@x.Price</td>
+                <td>@x.NumPages</td>
+                <td>
+                    <a class="btn btn-primary" id="submit" href="@x.WebLink" role="button">Buy Here!</a>
+                </td>
             </tr>
 
         }
     </table>
 
 </div>
+<div page-model="@Model.PagingInfo" page-action="Index" page-classes-enabled="true" page-class="btn"
+     page-class-normal="btn-outline-dark"
+     page-class-selected="btn-primary"
+     class="btn-group pull-right m-1"></div>

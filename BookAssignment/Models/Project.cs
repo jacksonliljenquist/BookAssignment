@@ -24,5 +24,7 @@ namespace BookAssignment.Models
         public string Classification { get; set; }
         [Required]
         public double Price { get; set; }
+        public int NumPages { get; set; }
+        public string WebLink { get; set; }
     }
 }
