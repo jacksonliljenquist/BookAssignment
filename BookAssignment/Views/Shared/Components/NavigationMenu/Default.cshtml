@@ -52,6 +52,7 @@
     }
 </style>
 
+<!--Create a hoverable dropdown menu that dynamically lists all Classifications-->
 <div class="dropdown">
     <button class="dropbtn">Filter by Category </button>
     <div class="dropdown-content">
@@ -59,6 +60,8 @@
            asp-route-category="">
             Home
         </a>
+
+        <!--Iterate through Classifications and list them out in the drop down menu-->
         @foreach (string category in Model)
         {
 
