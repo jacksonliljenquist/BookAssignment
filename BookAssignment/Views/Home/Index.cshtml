@@ -9,7 +9,6 @@
 </div>
 <style>
     table, th, td {
-
         padding: 15px;
         align-content: center;
     }
@@ -32,16 +31,23 @@
         border: none;
     }
 
-    #submit:hover {
-        border: none;
-        background: Blue;
-        box-shadow: 0px 0px 1px #777;
-    }
+        #submit:hover {
+            border: none;
+            background: Blue;
+            box-shadow: 0px 0px 1px #777;
+        }
 </style>
 <!--Add in picture of Books-->
-<div class="text-center">
-    <img src="~/img/bookImage.jpg" class="rounded"/>
+<div>
+    <vc:navigation-menu />
 </div>
+<div class="container">
+    <div class="text-center">
+        <img src="~/img/bookImage.jpg" class="rounded" />
+    </div>
+
+</div>
+
 
 <!--Print out database info into table-->
 <div class="align-items-center">
@@ -79,5 +85,5 @@
 </div>
 <div page-model="@Model.PagingInfo" page-action="Index" page-classes-enabled="true" page-class="btn"
      page-class-normal="btn-outline-dark"
-     page-class-selected="btn-primary"
+     page-class-selected="btn-primary" page-url-category="@Model.Classification"
      class="btn-group pull-right m-1"></div>
