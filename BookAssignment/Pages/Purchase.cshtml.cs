@@ -12,9 +12,10 @@ namespace BookAssignment.Pages
     public class PurchaseModel : PageModel
     {
         private IBookListRepository repository;
-        public PurchaseModel (IBookListRepository repo)
+        public PurchaseModel (IBookListRepository repo, Cart cartService)
         {
             repository = repo;
+            Cart = cartService;
         }
 
         public Cart Cart { get; set; }
@@ -22,19 +23,20 @@ namespace BookAssignment.Pages
         public void OnGet(string returnUrl)
         {
             ReturnUrl = returnUrl ?? "/";
-            Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
         }
 
         public IActionResult OnPost(long bookId, string returnUrl)
         {
             Project project = repository.Projects.FirstOrDefault(p => p.BookID == bookId);
 
-            Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
-
             Cart.AddItem(project, 1);
 
-            HttpContext.Session.SetJson("cart", Cart);
+            return RedirectToPage(new { returnUrl = returnUrl });
+        }
 
+        public IActionResult OnPostRemove (long bookId, string returnUrl)
+        {
+            Cart.RemoveLine(Cart.Lines.First(cl => cl.Project.BookID == bookId).Project);
             return RedirectToPage(new { returnUrl = returnUrl });
         }
     }

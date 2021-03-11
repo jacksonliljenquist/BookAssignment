@@ -9,7 +9,7 @@ namespace BookAssignment.Models
     {
         public List<CartLine> Lines { get; set; } = new List<CartLine>();
 
-        public void AddItem (Project project, int qty)
+        public virtual void AddItem (Project project, int qty)
         {
             CartLine line = Lines
                 .Where(p => p.Project.BookID == project.BookID)
@@ -29,10 +29,10 @@ namespace BookAssignment.Models
             }
         }
 
-        public void RemoveLine(Project proj) =>
+        public virtual void RemoveLine(Project proj) =>
             Lines.RemoveAll(x => x.Project.BookID == proj.BookID);
 
-        public void Clear() => Lines.Clear();
+        public virtual void Clear() => Lines.Clear();
 
         public double ComputeTotalSum() => Lines.Sum(e => e.Project.Price* e.Quantity); // having it in double format might give you trouble
 
