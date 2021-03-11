@@ -24,19 +24,19 @@ namespace BookAssignment.Controllers
             _repository = repository;
         }
 
-        public IActionResult Index(string category, int page = 1)
+        public IActionResult Index(string category, int pageNum = 1)
         {
             return View(new ProjectListViewModel
             {
                 Projects = _repository.Projects
                     .Where(p => category == null || p.Classification == category)
                     .OrderBy(p => p.BookID)
-                    .Skip((page - 1) * PageSize)
+                    .Skip((pageNum - 1) * PageSize)
                     .Take(PageSize),
 
                 PagingInfo = new PagingInfo
                 {
-                    CurrentPage = page,
+                    CurrentPage = pageNum,
                     ItemsPerPage = PageSize,
                     TotalNumItems = category == null ? _repository.Projects.Count() :
                         _repository.Projects.Where(x => x.Classification == category).Count()

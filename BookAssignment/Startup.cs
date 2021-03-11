@@ -28,11 +28,15 @@ namespace BookAssignment
             services.AddControllersWithViews();
             services.AddDbContext<BookDbContext>(options =>
             {
-               options.UseSqlServer(Configuration["ConnectionStrings:BookListConnection"]);
+               options.UseSqlite(Configuration["ConnectionStrings:BookListConnection"]);
 
             });
 
             services.AddScoped<IBookListRepository, EFBookListRepository>();
+            services.AddRazorPages();
+
+            services.AddDistributedMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +54,7 @@ namespace BookAssignment
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseRouting();
 
@@ -58,24 +63,26 @@ namespace BookAssignment
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("catpage",
-                    "{category}/{page:int}",
+                    "{category}/{pageNum:int}",
                     new { Controller = "Home", Action = "Index" }
                     );
 
                 endpoints.MapControllerRoute("page",
-                    "Projects/{page:int}",
+                    "Projects/{pageNum:int}",
                     new { Controller = "Home", Action = "Index" });
 
                 endpoints.MapControllerRoute("category",
                     "{category}",
-                    new { Controller = "Home", Action = "Index", page = 1 });
+                    new { Controller = "Home", Action = "Index", pageNum = 1 });
 
                 endpoints.MapControllerRoute(
                     "pagination",
-                    "P{page}",
+                    "P{pageNum}",
                     new { Controller = "Home", action = "Index" });
 
                 endpoints.MapDefaultControllerRoute();
+
+                endpoints.MapRazorPages();
             });
 
             SeedData.EnsurePopulated(app);

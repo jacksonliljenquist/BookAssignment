@@ -1,0 +1,40 @@
+﻿@page
+@model BookAssignment.Pages.PurchaseModel
+@{
+}
+
+<h2>Your Cart</h2>
+<div class="text-center">
+    <a class="btn btn-primary" href="@Model.ReturnUrl">Continue Shopping</a>
+</div>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Project</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model.Cart.Lines)
+        {
+            <tr>
+                <td>@line.Project.Title </td>
+                <td>@line.Quantity</td>
+                <td>@line.Project.Price</td>
+                <td>@((line.Quantity * line.Project.Price).ToString("c"))</td>
+            </tr>
+        }
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <td colspan="3">Total:</td>
+            <td>@Model.Cart.ComputeTotalSum().ToString("c")</td>
+        </tr>
+    </tfoot>
+
+</table>
+
+

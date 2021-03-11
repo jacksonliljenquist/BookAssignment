@@ -1,0 +1,24 @@
+﻿@model Project 
+
+<tr>
+    <td>@Model.Title</td>
+    <td>@Model.Author</td>
+    <td>@Model.publisher</td>
+    <td>@Model.ISBN</td>
+    <td>@Model.Classification</td>
+    <td>@Model.Price</td>
+    <td>@Model.NumPages</td>
+    <td>
+        <!--<a class="btn btn-primary" id="submit" href="" role="button">Buy Here!</a>-->
+        <form id="@Model.BookID" asp-page="/Purchase" method="post">
+            <input type="hidden" asp-for="BookID" /> <!--WATCH OVER HERE!!! IF YOU ARE HAVING TROUBLE LINKING TOGETHER, ITS PROBABLY HERE!-->
+            <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+            <span class="card-text p-1">
+                @Model.Title
+                <button type="submit" class="btn-success btn-sm pull-right" style="float:right">
+                    Add to Cart
+                </button>
+            </span>
+        </form>
+    </td>
+</tr>

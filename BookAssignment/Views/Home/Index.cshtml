@@ -69,19 +69,7 @@
         </tr>
         @foreach (var x in Model.Projects)
         {
-            <tr>
-                <td>@x.Title</td>
-                <td>@x.Author</td>
-                <td>@x.publisher</td>
-                <td>@x.ISBN</td>
-                <td>@x.Classification</td>
-                <td>@x.Price</td>
-                <td>@x.NumPages</td>
-                <td>
-                    <a class="btn btn-primary" id="submit" href="@x.WebLink" role="button">Buy Here!</a>
-                </td>
-            </tr>
-
+            <partial name="ProjectSummary" model="x" />
         }
     </table>
 
